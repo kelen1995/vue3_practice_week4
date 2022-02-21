@@ -1,5 +1,6 @@
 import { createApp } from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.29/vue.esm-browser.min.js';
 import pagination from './components/pagination.js'
+import productModalComponent from './components/profuctModal.js'
 
 const apiUrl = 'https://vue3-course-api.hexschool.io/v2';
 const apiPath = "kn99";
@@ -46,24 +47,24 @@ const app = createApp({
                     break;
             }
         },
-        updateProduct() {
+        updateProduct(product=this.tempProduct) {
             let method = 'post';
             let url = `${apiUrl}/api/${apiPath}/admin/product`;
             let message = '產品新增完成';
 
             if (!this.isNew) {
                 method = 'put';
-                url = `${apiUrl}/api/${apiPath}/admin/product/${this.tempProduct.id}`;
+                url = `${apiUrl}/api/${apiPath}/admin/product/${product.id}`;
                 message = '產品修改完成';
             }
 
             axios[method](url, {
-                "data": this.tempProduct
+                "data": product
             })
             .then(res => {
                 alert(message);
                 productModal.hide();
-                this.getProducts();
+                this.getProducts(this.pagination.current_page);
                 this.tempProduct = {imagesUrl:[]};
             })
             .catch(err => {
@@ -102,7 +103,7 @@ const app = createApp({
     }
 });
 
-// 新增分頁元件
-app.component('pagination',pagination);
+app.component('pagination', pagination); // 新增分頁元件
+app.component('productModal', productModalComponent); // 新增 modal 元件
 
 app.mount('#app');
