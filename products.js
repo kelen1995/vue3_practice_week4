@@ -13,13 +13,16 @@ const app = createApp({
                 imagesUrl:[]
             },
             isNew: false,
+            pagination:{},
+            currentPage:1,
         }
     },
     methods: {
-        getProducts() {
-            axios.get(`${apiUrl}/api/${apiPath}/admin/products`)
+        getProducts(page=1) {
+            axios.get(`${apiUrl}/api/${apiPath}/admin/products?page=${page}`)
             .then(res => {
                 this.products = res.data.products;
+                this.pagination = res.data.pagination;
             })
             .catch(err => {
                 console.log(err.response);
