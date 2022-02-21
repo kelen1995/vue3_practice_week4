@@ -1,6 +1,7 @@
 import { createApp } from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.29/vue.esm-browser.min.js';
 import pagination from './components/pagination.js'
-import productModalComponent from './components/profuctModal.js'
+import productModalComponent from './components/productModal.js'
+import delProductModalComponent from './components/delProductModal.js'
 
 const apiUrl = 'https://vue3-course-api.hexschool.io/v2';
 const apiPath = "kn99";
@@ -105,5 +106,6 @@ const app = createApp({
 
 app.component('pagination', pagination); // 新增分頁元件
 app.component('productModal', productModalComponent); // 新增 modal 元件
+app.component('delProductModal',delProductModalComponent) // 新增 delete modal 元件
 
 app.mount('#app');
