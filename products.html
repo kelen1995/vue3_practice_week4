@@ -60,13 +60,7 @@
               </tr>
             </tbody>
           </table>
-          <nav aria-label="Page navigation example">
-            <ul class="pagination">
-              <li class="page-item" :class="{disabled:!pagination.has_pre}" @click="getProducts(pagination.current_page-1)"><a class="page-link" href="#">Previous</a></li>
-              <li class="page-item" v-for="page in pagination.total_pages"  @click="getProducts(page)"><a class="page-link" href="#">{{page}}</a></li>
-              <li class="page-item" :class="{disabled:!pagination.has_next}" @click="getProducts(pagination.current_page+1)"><a class="page-link" href="#">Next</a></li>
-            </ul>
-          </nav>
+          <pagination :pagination="pagination" @switch-page="getProducts"></pagination>
         </div>
         <!-- Modal -->
         <div id="productModal" ref="productModal" class="modal fade" tabindex="-1" aria-labelledby="productModalLabel"

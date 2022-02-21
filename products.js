@@ -1,4 +1,5 @@
 import { createApp } from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.29/vue.esm-browser.min.js';
+import pagination from './components/pagination.js'
 
 const apiUrl = 'https://vue3-course-api.hexschool.io/v2';
 const apiPath = "kn99";
@@ -14,7 +15,6 @@ const app = createApp({
             },
             isNew: false,
             pagination:{},
-            currentPage:1,
         }
     },
     methods: {
@@ -101,5 +101,8 @@ const app = createApp({
         this.checkUser();
     }
 });
+
+// 新增分頁元件
+app.component('pagination',pagination);
 
 app.mount('#app');
