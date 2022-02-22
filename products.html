@@ -62,8 +62,8 @@
           </table>
           <pagination :pagination="pagination" @switch-page="getProducts"></pagination>
         </div>
-        <product-modal :temp-product="tempProduct" @update-product="updateProduct"></product-modal>
-        <del-product-modal @delete-product="deleteProduct"></del-product-modal>
+        <product-modal :temp-product="tempProduct" @update-product="updateProduct" ref="productModal"></product-modal>
+        <del-product-modal @delete-product="deleteProduct" ref="delProductModal"></del-product-modal>
         <!-- Modal -->
       </div>
   

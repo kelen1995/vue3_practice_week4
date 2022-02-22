@@ -96,9 +96,20 @@ export default {
     </div>
     `,
     props:['tempProduct'],
+    data() {
+      return {
+        modal: '',
+      }
+    },
     methods: {
         updateProduct(){
             this.$emit('update-product',this.tempProduct);
+        },
+        toggleModal() {
+          this.modal.toggle();
         }
+    },
+    mounted() {
+      this.modal = new bootstrap.Modal(document.getElementById('productModal'), {});
     }
 }

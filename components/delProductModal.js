@@ -26,9 +26,20 @@ export default {
         </div>
     </div>
     `,
+    data() {
+        return {
+            modal:'',
+        }
+    },
     methods: {
         deleteProduct() {
             this.$emit('delete-product', '');
+        },
+        toggleModal() {
+            this.modal.toggle();
         }
+    },
+    mounted() {
+        this.modal = new bootstrap.Modal(document.getElementById('delProductModal'), {});
     }
 }

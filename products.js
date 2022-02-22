@@ -1,12 +1,10 @@
 import { createApp } from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.29/vue.esm-browser.min.js';
 import pagination from './components/pagination.js'
-import productModalComponent from './components/productModal.js'
-import delProductModalComponent from './components/delProductModal.js'
+import productModal from './components/productModal.js'
+import delProductModal from './components/delProductModal.js'
 
 const apiUrl = 'https://vue3-course-api.hexschool.io/v2';
 const apiPath = "kn99";
-let productModal = {};
-let deleteProductModal = {};
 
 const app = createApp({
     data() {
@@ -35,18 +33,21 @@ const app = createApp({
                 case 'add':
                     this.tempProduct = {imagesUrl:[]};
                     this.isNew = true;
-                    productModal.show();
+                    this.toggleProductModal();
                     break;
                 case 'edit':
                     this.tempProduct = {...product};
                     this.isNew = false;
-                    productModal.show();
+                    this.toggleProductModal();
                     break;
                 case 'delete':
-                    deleteProductModal.show();
+                    this.toggleDelProductModal();
                     this.tempProduct = {...product};
                     break;
             }
+        },
+        toggleProductModal() {
+            this.$refs.productModal.toggleModal();
         },
         updateProduct(product=this.tempProduct) {
             let method = 'post';
@@ -64,7 +65,7 @@ const app = createApp({
             })
             .then(res => {
                 alert(message);
-                productModal.hide();
+                this.toggleProductModal();
                 this.getProducts(this.pagination.current_page);
                 this.tempProduct = {imagesUrl:[]};
             })
@@ -76,7 +77,7 @@ const app = createApp({
         deleteProduct() {
             axios.delete(`${apiUrl}/api/${apiPath}/admin/product/${this.tempProduct.id}`)
             .then(res => {
-                deleteProductModal.hide();
+                this.toggleDelProductModal();
                 this.getProducts();
             })
             .catch(err => {
@@ -84,12 +85,13 @@ const app = createApp({
                 alert('產品刪除失敗');
             });
         },
+        toggleDelProductModal() {
+            this.$refs.delProductModal.toggleModal();
+        },
         checkUser() {// 檢查是否有登入 token
             axios.defaults.headers.common.Authorization = document.cookie.replace(/(?:(?:^|.*;\s*)hextoken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
             axios.post(`${apiUrl}/api/user/check`)
             .then(res => {
-                productModal = new bootstrap.Modal(document.getElementById('productModal'), {});
-                deleteProductModal = new bootstrap.Modal(document.getElementById('delProductModal'), {});
                 this.getProducts();
             })
             .catch(err => {
@@ -105,7 +107,7 @@ const app = createApp({
 });
 
 app.component('pagination', pagination); // 新增分頁元件
-app.component('productModal', productModalComponent); // 新增 modal 元件
-app.component('delProductModal',delProductModalComponent) // 新增 delete modal 元件
+app.component('productModal', productModal); // 新增 modal 元件
+app.component('delProductModal',delProductModal) // 新增 delete modal 元件
 
 app.mount('#app');
